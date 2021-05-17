@@ -1,0 +1,90 @@
+#VAR Timeseries guide
+
+#Load Libraries for database connection and Vector Autoregression models
+
+library(odbc)
+library(vars)
+
+#Initialize connection to DB
+connection <- dbConnect(odbc(),
+                        Driver = "SQL Server",
+                        Server = ,
+                        Database = ,
+                        UID = ,
+                        PWD = )
+
+#Run SQL Query to grab data
+
+table <- dbGetQuery(connection, '
+                    Select *
+                    From 
+                    )
+
+#Repeat SQL queries to get all the data you need
+
+#define variables from tables
+
+var <- table$category
+var2 <- table$category2
+var3 <- table$category3
+var4 <- table$category4
+
+#If you decide to not filter in the SQL query, can always filter like such
+
+spec_var_tag <- which(table$category == "Name of inputted value")
+
+New_data <- table[spec_var_tag,]
+
+#if needing specific variables of first 100 values
+
+New_data_hundred <- table[spec_var_tag[1:100],]
+
+#If using data from the the hundred variables taken
+
+var <- New_data_hundred$category
+var2 <- New_data_hundred$category2
+var3 <- New_data_hundred$category3
+var4 <- New_data_hundred$category4
+
+#VAR wants data to be in dataframes
+
+combined_data_frame <- data.frame(var,var2,var3,var4)
+
+#define exogenous variables in separate data frame
+## exog variables are made just like other variables
+
+exog_data_frame <- data.frame(exogvar,exogvar2,etc...)
+
+VARselect(combined_data_frame, lag.max= , type = "", exogen =)
+
+VAR_iteration <- VAR(combined_data_frame ,p = ,type = "", exogen = ,lag.max=, ic = "")
+
+#for dumvar, need the lastest datapoint of your exogenous predictors stored in a dataframe like above
+#if theres 101 variables, the training set would contain 1:100, and the dumvar would be 101:101
+
+forecast_VAR <- predict(VAR_iteration, n.ahead = , dumvar = )
+
+#Below are helpful tests in VAR that can help determine the type of data you are using
+
+arch.test()
+
+normality.test()
+
+causality()
+
+irf()
+
+fevd()
+
+
+#Plotting and sumamrizing the model created
+
+plot(forecast_VAR)
+summary(forecast_VAR
+
+
+#If data types exceed ram capacity and ram needs to be freed
+
+rm(list = ls())
+
+.rs.restartR()
